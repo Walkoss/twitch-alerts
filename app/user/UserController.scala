@@ -34,13 +34,28 @@ class UserController @Inject()
   }
 
   def delete(id: Int): Action[AnyContent] = Action.async { implicit request =>
-    repo.delete(id).map { _ => NoContent }
+    repo.delete(id).map {
+      case 1 => NoContent
+      case 0 => NotFound(Json.obj("message" -> s"User $id not found"))
+    }
   }
 
   def show(id: Int): Action[AnyContent] = Action.async { implicit request =>
     repo.show(id).map {
       case Some(user: User) => Ok(Json.toJson(user))
       case None => NotFound(Json.obj("message" -> s"User $id not found"))
+    }
+  }
+
+  def update(id: Int): Action[JsValue] = Action.async(parse.json) { implicit request =>
+    // TODO: validate body
+    val isSubscribed = (request.body \ "is_subscribed").asOpt[Boolean]
+    val isBlacklisted = (request.body \ "is_blacklisted").asOpt[Boolean]
+
+    repo.update(id, isSubscribed, isBlacklisted).map {
+      // TODO: change this to return user object updated
+      case 1 => Ok(Json.obj("message" -> s"User $id updated"))
+      case 0 => NotFound(Json.obj("message" -> s"User $id not found"))
     }
   }
 }

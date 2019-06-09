@@ -27,13 +27,13 @@ class UserRepository @Inject()(protected val dbConfigProvider: DatabaseConfigPro
 
   private val users = TableQuery[UserTable]
 
-  def all(is_subscribed: Option[Boolean], is_blacklisted: Option[Boolean]): Future[Seq[User]] = db.run {
+  def all(isSubscribed: Option[Boolean], isBlacklisted: Option[Boolean]): Future[Seq[User]] = db.run {
     users
       .filter { user =>
-        is_subscribed.fold(true.bind)(user.isSubscribed === _)
+        isSubscribed.fold(true.bind)(user.isSubscribed === _)
       }
       .filter { user =>
-        is_blacklisted.fold(true.bind)(user.isBlacklisted === _)
+        isBlacklisted.fold(true.bind)(user.isBlacklisted === _)
       }
       .result
   }
@@ -48,5 +48,21 @@ class UserRepository @Inject()(protected val dbConfigProvider: DatabaseConfigPro
 
   def show(id: Int): Future[Option[User]] = db.run {
     users.filter(_.id === id).result.headOption
+  }
+
+  def update(id: Int, isSubscribed: Option[Boolean], isBlacklisted: Option[Boolean]): Future[Int] = db.run {
+    (isSubscribed, isBlacklisted) match {
+      case (Some(x), Some(y)) =>
+        val q = for {u <- users if u.id === id} yield (u.isSubscribed, u.isBlacklisted)
+        q.update((x, y))
+      case (Some(x), _) =>
+        val q = for {u <- users if u.id === id} yield u.isSubscribed
+        q.update(x)
+      case (_, Some(y)) =>
+        val q = for {u <- users if u.id === id} yield u.isBlacklisted
+        q.update(y)
+      case (None, None) =>
+        return Future.successful(0)
+    }
   }
 }
