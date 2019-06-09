@@ -10,8 +10,8 @@ import scala.concurrent.{ExecutionContext, Future}
 class UserController @Inject()
 (repo: UserRepository, val cc: ControllerComponents)
 (implicit ec: ExecutionContext) extends AbstractController(cc) {
-  def index: Action[AnyContent] = Action.async { implicit request =>
-    repo.all.map { users =>
+  def index(is_subscribed: Option[Boolean], is_blacklisted: Option[Boolean]): Action[AnyContent] = Action.async { implicit request =>
+    repo.all(is_subscribed, is_blacklisted).map { users =>
       Ok(Json.toJson(users))
     }
   }

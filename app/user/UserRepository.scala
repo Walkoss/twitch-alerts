@@ -27,8 +27,15 @@ class UserRepository @Inject()(protected val dbConfigProvider: DatabaseConfigPro
 
   private val users = TableQuery[UserTable]
 
-  def all: Future[Seq[User]] = db.run {
-    users.result
+  def all(is_subscribed: Option[Boolean], is_blacklisted: Option[Boolean]): Future[Seq[User]] = db.run {
+    users
+      .filter { user =>
+        is_subscribed.fold(true.bind)(user.isSubscribed === _)
+      }
+      .filter { user =>
+        is_blacklisted.fold(true.bind)(user.isBlacklisted === _)
+      }
+      .result
   }
 
   def delete(id: Int): Future[Int] = db.run {
