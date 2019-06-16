@@ -7,7 +7,7 @@ case class Tip
 (
   id: Option[Int],
   amount: Double,
-  user_id: Int,
+  userId: Int,
 )
 
 object Tip {

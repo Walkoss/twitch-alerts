@@ -1,2 +1,3 @@
-->  /users  user.UserRouter
-->  /tips   tip.TipRouter
+->  /users      user.UserRouter
+->  /tips       tip.TipRouter
+->  /giveaways  giveaway.GiveawayRouter
