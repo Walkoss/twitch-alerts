@@ -8,12 +8,12 @@ import scala.concurrent.{Future, ExecutionContext}
 
 @Singleton
 class UserRepository @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
-  private val dbConfig = dbConfigProvider.get[JdbcProfile]
+  val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
   import profile.api._
 
-  private class UserTable(tag: Tag) extends Table[User](tag, "user") {
+  class UserTable(tag: Tag) extends Table[User](tag, "user") {
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
     def username = column[String]("username")
@@ -25,7 +25,7 @@ class UserRepository @Inject()(protected val dbConfigProvider: DatabaseConfigPro
     def * = (id.?, username, isSubscribed, isBlacklisted) <> ((User.apply _).tupled, User.unapply)
   }
 
-  private val users = TableQuery[UserTable]
+  val users = TableQuery[UserTable]
 
   def all(isSubscribed: Option[Boolean], isBlacklisted: Option[Boolean]): Future[Seq[User]] = db.run {
     users
