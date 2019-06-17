@@ -46,6 +46,10 @@ class UserRepository @Inject()(protected val dbConfigProvider: DatabaseConfigPro
     (users returning users.map(_.id) into ((user, id) => user.copy(id = Some(id)))) += user
   }
 
+  def exists(id: Int): Future[Boolean] = db.run {
+    users.filter(_.id === id).exists.result
+  }
+
   def show(id: Int): Future[Option[User]] = db.run {
     users.filter(_.id === id).result.headOption
   }

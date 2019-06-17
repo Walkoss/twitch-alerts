@@ -3,12 +3,13 @@ package tip
 import javax.inject.{Inject, Singleton}
 import play.api.libs.json.{JsError, JsValue, Json}
 import play.api.mvc._
+import user.UserRepository
 
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class TipController @Inject()
-(repo: TipRepository, val cc: ControllerComponents)
+(repo: TipRepository, userRepo: UserRepository, val cc: ControllerComponents)
 (implicit ec: ExecutionContext) extends AbstractController(cc) {
   def index: Action[AnyContent] = Action.async { implicit request =>
     repo.all.map { tips =>
@@ -17,17 +18,18 @@ class TipController @Inject()
   }
 
   def create: Action[JsValue] = Action.async(parse.json) { implicit request =>
-    val tipResult = request.body.validate[Tip]
+    val tipValidationResult = request.body.validate[Tip]
 
-    tipResult.fold(
+    tipValidationResult.fold(
       errors => {
         Future {
           BadRequest(Json.obj("message" -> JsError.toJson(errors)))
         }
       },
       tip => {
-        repo.create(tip).map { tip =>
-          Created(Json.toJson(tip))
+        userRepo.exists(tip.userId) flatMap {
+          case true => repo.create(tip).map(tip => Ok(Json.toJson(tip)))
+          case false => Future.successful(NotFound(Json.obj("message" -> s"User ${tip.userId} not found")))
         }
       }
     )
