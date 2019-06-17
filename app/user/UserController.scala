@@ -26,8 +26,9 @@ class UserController @Inject()
         }
       },
       user => {
-        repo.create(user).map { user =>
-          Created(Json.toJson(user))
+        repo.usernameExists(user.username.trim) flatMap {
+          case true => Future.successful(BadRequest(Json.obj("message" -> s"${user.username.trim} is already taken")))
+          case false => repo.create(user).map(user => Created(Json.toJson(user)))
         }
       }
     )

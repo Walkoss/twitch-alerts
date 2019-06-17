@@ -50,6 +50,10 @@ class UserRepository @Inject()(protected val dbConfigProvider: DatabaseConfigPro
     users.filter(_.id === id).exists.result
   }
 
+  def usernameExists(username: String): Future[Boolean] = db.run {
+    users.filter(_.username === username).exists.result
+  }
+
   def show(id: Int): Future[Option[User]] = db.run {
     users.filter(_.id === id).result.headOption
   }
