@@ -48,4 +48,8 @@ class GiveawayRegistrationRepository @Inject()(protected val dbConfigProvider: D
       .take(1)
       .result.headOption
   }
+
+  def exists(giveawayId: Int, userId: Int): Future[Boolean] = db.run {
+    giveawaysRegistrations.filter(gar => gar.giveawayId === giveawayId && gar.userId === userId).exists.result
+  }
 }

@@ -53,13 +53,16 @@ class GiveawayController @Inject()
     val userId = (request.body \ "user_id").as[Int]
 
     userRepo.show(userId) flatMap {
-      case Some(u: User) => gaRepo.show(id) flatMap {
-        case Some(g: Giveaway) => (g.isSubscribersOnly, u.isSubscribed, u.isBlacklisted) match {
-          case (true, false, false) => Future.successful(BadRequest(Json.obj("message" -> s"User $userId is not a subscriber (giveaway with subscribers only)")))
-          case (_, _, true) => Future.successful(BadRequest(Json.obj("message" -> s"User $userId is blacklisted!")))
-          case (_, _, _) => garRepo.create(GiveawayRegistration(giveawayId = id, userId = userId)).map(_ => Created(Json.obj("message" -> s"User $userId subscribed to giveaway $id")))
+      case Some(u: User) => garRepo.exists(giveawayId = id, userId = userId) flatMap {
+        case true => Future.successful(Conflict(Json.obj("message" -> s"User $userId has already registered")))
+        case false => gaRepo.show(id) flatMap {
+          case Some(g: Giveaway) => (g.isSubscribersOnly, u.isSubscribed, u.isBlacklisted) match {
+            case (true, false, false) => Future.successful(BadRequest(Json.obj("message" -> s"User $userId is not a subscriber (giveaway with subscribers only)")))
+            case (_, _, true) => Future.successful(BadRequest(Json.obj("message" -> s"User $userId is blacklisted!")))
+            case (_, _, _) => garRepo.create(GiveawayRegistration(giveawayId = id, userId = userId)).map(_ => Created(Json.obj("message" -> s"User $userId subscribed to giveaway $id")))
+          }
+          case None => Future.successful(NotFound(Json.obj("message" -> s"Giveaway $id not found")))
         }
-        case None => Future.successful(NotFound(Json.obj("message" -> s"Giveaway $id not found")))
       }
       case None => Future.successful(NotFound(Json.obj("message" -> s"User $userId not found")))
     }
