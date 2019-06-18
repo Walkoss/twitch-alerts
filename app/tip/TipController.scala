@@ -49,7 +49,10 @@ class TipController @Inject()
           case (userId, sum) => Json.obj("user_id" -> userId, "sum" -> sum)
         }
       }.map(result => Ok(Json.toJson(result)))
-      case None => repo.sumAllTips.map { result => Ok(Json.obj("sum" -> result)) }
+      case None => repo.sumAllTips.map {
+        case None => Ok(Json.obj("sum" -> 0))
+        case Some(sum) => Ok(Json.obj("sum" -> sum))
+      }
     }
   }
 

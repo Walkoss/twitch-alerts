@@ -1,3 +1,4 @@
 ->  /users      user.UserRouter
 ->  /tips       tip.TipRouter
 ->  /giveaways  giveaway.GiveawayRouter
+->  /polls      poll.PollRouter
