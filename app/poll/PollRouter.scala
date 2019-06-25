@@ -21,5 +21,8 @@ class PollRouter @Inject()(controller: PollController) extends SimpleRouter {
 
     case POST(p"/${int(id)}:vote") =>
       controller.vote(id)
+
+    case GET(p"/${int(id)}:result") =>
+      controller.result(id)
   }
 }

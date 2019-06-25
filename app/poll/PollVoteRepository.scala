@@ -41,4 +41,10 @@ class PollVoteRepository @Inject()(protected val dbConfigProvider: DatabaseConfi
   def exists(pollId: Int, userId: Int): Future[Boolean] = db.run {
     pollVotes.filter(pv => pv.pollId === pollId && pv.userId === userId).exists.result
   }
+
+  def result(pollId: Int): Future[Seq[(String, Int)]] = db.run {
+    pollVotes.filter(pv => pv.pollId === pollId).groupBy(_.choice).map {
+      case (pv, results) => pv -> results.length
+    }.result
+  }
 }

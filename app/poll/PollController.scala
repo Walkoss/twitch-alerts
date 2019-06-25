@@ -1,9 +1,9 @@
 package poll
 
 import javax.inject.{Inject, Singleton}
-import play.api.libs.json.{JsError, JsValue, Json}
+import play.api.libs.json._
 import play.api.mvc._
-import user.{User, UserRepository}
+import user.UserRepository
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -52,7 +52,7 @@ class PollController @Inject()
     // TODO: validate body
     val userId = (request.body \ "user_id").as[Int]
     val choice = (request.body \ "choice").as[String].trim
-    
+
     userRepo.exists(userId) flatMap {
       case true => pollRepo.exists(id) flatMap {
         case true => pollRepo.choiceExists(id, choice) flatMap {
@@ -65,6 +65,18 @@ class PollController @Inject()
         case false => Future.successful(NotFound(Json.obj("message" -> s"Poll $id not found")))
       }
       case false => Future.successful(NotFound(Json.obj("message" -> s"User $userId not found")))
+    }
+  }
+
+  def result(id: Int): Action[AnyContent] = Action.async { implicit request =>
+    implicit val itemWrite: Writes[(String, Int)] = (item: (String, Int)) => Json.obj(
+      "choice" -> item._1,
+      "total" -> item._2
+    )
+
+    pollRepo.exists(id) flatMap {
+      case true => pollVoteRepo.result(id).map(result => Ok(Json.toJson(result)))
+      case false => Future.successful(NotFound(Json.obj("message" -> s"Poll $id not found")))
     }
   }
 }
