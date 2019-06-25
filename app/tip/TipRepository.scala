@@ -2,7 +2,6 @@ package tip
 
 import javax.inject.{Inject, Singleton}
 import play.api.db.slick.DatabaseConfigProvider
-import slick.ast.Library.AggregateFunction
 import slick.jdbc.JdbcProfile
 import user.{User, UserRepository}
 
