@@ -116,7 +116,7 @@ class TipRouterSpec extends BaseSpec {
     }
 
     "delete tip" in {
-      val request = FakeRequest(DELETE, "/users/4").withHeaders(HOST -> "localhost:9000")
+      val request = FakeRequest(DELETE, "/tips/4").withHeaders(HOST -> "localhost:9000")
       val result: Future[Result] = route(app, request).get
       status(result) mustBe NO_CONTENT
     }

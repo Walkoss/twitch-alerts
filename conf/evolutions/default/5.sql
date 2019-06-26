@@ -24,7 +24,8 @@ VALUES (2.99, 1),
 INSERT INTO giveaway ("id", "name", "is_subscribers_only"
 )
 VALUES (1, 'Logitech G Pro', FALSE),
-       (2, 'PC ZT Indépendant By LDLC', TRUE);
+       (2, 'PC ZT Indépendant By LDLC', TRUE),
+       (3, 'CSGO knife', FALSE);
 
 INSERT INTO giveaway_registration ("giveaway_id", "user_id"
 )

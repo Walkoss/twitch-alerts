@@ -59,7 +59,7 @@ class GiveawayController @Inject()
           case Some(g: Giveaway) => (g.isSubscribersOnly, u.isSubscribed, u.isBlacklisted) match {
             case (true, false, false) => Future.successful(BadRequest(Json.obj("message" -> s"User $userId is not a subscriber (giveaway with subscribers only)")))
             case (_, _, true) => Future.successful(BadRequest(Json.obj("message" -> s"User $userId is blacklisted!")))
-            case (_, _, _) => garRepo.create(GiveawayRegistration(giveawayId = id, userId = userId)).map(_ => Created(Json.obj("message" -> s"User $userId subscribed to giveaway $id")))
+            case (_, _, _) => garRepo.create(GiveawayRegistration(giveawayId = id, userId = userId)).map(_ => Ok(Json.obj("message" -> s"User $userId subscribed to giveaway $id")))
           }
           case None => Future.successful(NotFound(Json.obj("message" -> s"Giveaway $id not found")))
         }
