@@ -7,7 +7,8 @@ INSERT INTO user ("id", "username", "is_subscribed", "is_blacklisted"
 )
 VALUES (1, 'Walid', TRUE, FALSE),
        (2, 'Pierre', FALSE, FALSE),
-       (3, 'Alexis', FALSE, TRUE);
+       (3, 'Alexis', FALSE, TRUE),
+       (4, 'Christophe', FALSE, TRUE);
 
 -- Tips
 INSERT INTO tip ("amount", "user_id"
