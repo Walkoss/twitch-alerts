@@ -28,7 +28,7 @@ class PollController @Inject()
       },
       poll => {
         pollRepo.create(poll) map { poll =>
-          Ok(Json.toJson(poll))
+          Created(Json.toJson(poll))
         }
       }
     )
@@ -58,7 +58,7 @@ class PollController @Inject()
         case true => pollRepo.choiceExists(id, choice) flatMap {
           case true => pollVoteRepo.exists(id, userId) flatMap {
             case true => Future.successful(Conflict(Json.obj("message" -> s"User $userId already voted")))
-            case false => pollVoteRepo.create(PollVote(pollId = id, userId = userId, choice = choice)).map(_ => Created(Json.obj("message" -> s"User $userId voted '$choice' to poll $id")))
+            case false => pollVoteRepo.create(PollVote(pollId = id, userId = userId, choice = choice)).map(_ => Ok(Json.obj("message" -> s"User $userId voted '$choice' to poll $id")))
           }
           case false => Future.successful(BadRequest(Json.obj("message" -> s"Choice '$choice' is not correct for poll $id")))
         }
