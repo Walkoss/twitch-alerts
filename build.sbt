@@ -1,7 +1,6 @@
 import play.sbt.PlaySettings
 import sbt.Keys._
 
-lazy val GatlingTest = config("gatling") extend Test
 
 scalaVersion in ThisBuild := "2.12.8"
 
@@ -13,8 +12,6 @@ libraryDependencies += "com.netaporter" %% "scala-uri" % "0.4.16"
 libraryDependencies += "net.codingwell" %% "scala-guice" % "4.2.1"
 
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.2" % Test
-libraryDependencies += "io.gatling.highcharts" % "gatling-charts-highcharts" % "3.0.1.1" % Test
-libraryDependencies += "io.gatling" % "gatling-test-framework" % "3.0.1.1" % Test
 
 libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-slick" % "4.0.0",
@@ -24,10 +21,9 @@ libraryDependencies += "org.xerial" % "sqlite-jdbc" % "3.27.2.1"
 
 // The Play project itself
 lazy val root = (project in file("."))
-  .enablePlugins(Common, PlayService, PlayLayoutPlugin, GatlingPlugin)
-  .configs(GatlingTest)
-  .settings(inConfig(GatlingTest)(Defaults.testSettings): _*)
+  .enablePlugins(Common, PlayService, PlayLayoutPlugin)
   .settings(
-    name := """twitch-alerts""",
-    scalaSource in GatlingTest := baseDirectory.value / "/gatling/simulation"
+    name := """twitch-alerts"""
   )
+
+javaOptions in Test += "-Dconfig.resource=application.test.conf"
