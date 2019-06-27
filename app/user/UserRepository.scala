@@ -51,7 +51,7 @@ class UserRepository @Inject()(protected val dbConfigProvider: DatabaseConfigPro
   }
 
   def usernameExists(username: String): Future[Boolean] = db.run {
-    users.filter(_.username === username).exists.result
+    users.filter(_.username.toLowerCase === username.toLowerCase).exists.result
   }
 
   def show(id: Int): Future[Option[User]] = db.run {

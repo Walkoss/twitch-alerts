@@ -129,14 +129,14 @@ class UserRouterSpec extends BaseSpec {
     }
 
     "return an error when username is already taken" in {
-      val payload = Json.obj("username" -> "Walkoss", "is_subscribed" -> true, "is_blacklisted" -> false)
+      val payload = Json.obj("username" -> "walkoss", "is_subscribed" -> true, "is_blacklisted" -> false)
       val request = FakeRequest(POST, "/users")
         .withHeaders(HOST -> "localhost:9000")
         .withJsonBody(payload)
       val result: Future[Result] = route(app, request).get
       val message = (contentAsJson(result) \ "message").as[String]
       status(result) mustBe CONFLICT
-      message mustBe "Walkoss is already taken"
+      message mustBe "walkoss is already taken"
     }
 
     "update a user" in {
