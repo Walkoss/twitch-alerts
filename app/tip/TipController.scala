@@ -28,7 +28,10 @@ class TipController @Inject()
       },
       tip => {
         userRepo.exists(tip.userId) flatMap {
-          case true => repo.create(tip).map(tip => Created(Json.toJson(tip)))
+          case true => tip.amount match {
+            case x if x > 0 => repo.create(tip).map(tip => Created(Json.toJson(tip)))
+            case _ => Future.successful(BadRequest(Json.obj("message" -> "Tip amount must be greater than 0")))
+          }
           case false => Future.successful(NotFound(Json.obj("message" -> s"User ${tip.userId} not found")))
         }
       }

@@ -106,6 +106,17 @@ class TipRouterSpec extends BaseSpec {
       message mustBe "User 12 not found"
     }
 
+    "return an error if tip amount is less than zero" in {
+      val payload = Json.obj("amount" -> -10.99, "user_id" -> 1)
+      val request = FakeRequest(POST, "/tips")
+        .withHeaders(HOST -> "localhost:9000")
+        .withJsonBody(payload)
+      val result: Future[Result] = route(app, request).get
+      val message = (contentAsJson(result) \ "message").as[String]
+      status(result) mustBe BAD_REQUEST
+      message mustBe "Tip amount must be greater than 0"
+    }
+
     "return an error when payload is not correct" in {
       val payload = Json.obj("incorrect_key" -> 10.99)
       val request = FakeRequest(POST, "/tips")
