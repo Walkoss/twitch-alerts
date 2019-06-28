@@ -1,0 +1,677 @@
+{
+	"info": {
+		"_postman_id": "340b4393-17c9-43ba-b5ed-a3441589e3bd",
+		"name": "TwitchAlerts",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create a user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"Walkoss\",\n\t\"is_subscribed\": true,\n\t\"is_blacklisted\": false\n}"
+						},
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Blacklist a user",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"is_blacklisted\": true\n}"
+						},
+						"url": {
+							"raw": "{{url}}/users/4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Subscribe a user",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"is_subscribed\": true\n}"
+						},
+						"url": {
+							"raw": "{{url}}/users/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get subs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/users?is_subscribed=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "is_subscribed",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get blacklisted users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/users?is_blacklisted=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "is_blacklisted",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/users/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/users/4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tips",
+			"item": [
+				{
+					"name": "Get tips",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/tips",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tips"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get tip's users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/tips/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tips",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sum all tips",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/tips?aggregate=sum",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tips"
+							],
+							"query": [
+								{
+									"key": "aggregate",
+									"value": "sum"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sum all tips by user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/tips?groupby=user_id&aggregate=sum",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tips"
+							],
+							"query": [
+								{
+									"key": "groupby",
+									"value": "user_id"
+								},
+								{
+									"key": "aggregate",
+									"value": "sum"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sum all tips for a given user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/tips?aggregate=sum&user_id=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tips"
+							],
+							"query": [
+								{
+									"key": "aggregate",
+									"value": "sum"
+								},
+								{
+									"key": "user_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a tip",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"amount\": 100.45,\n\t\"user_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{url}}/tips",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tips"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a tip",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/tips/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tips",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Giveaways",
+			"item": [
+				{
+					"name": "Create a giveaway",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"OnePlus 7 Pro\",\n\t\"is_subscribers_only\": true\n}"
+						},
+						"url": {
+							"raw": "{{url}}/giveaways",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"giveaways"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Draw giveaway's winner",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/giveaways/1:draw",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"giveaways",
+								"1:draw"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get giveaways",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/giveaways",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"giveaways"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get giveaway",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/giveaways/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"giveaways",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a giveaway",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/giveaways/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"giveaways",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register for a giveaway",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user_id\": 2\n}"
+						},
+						"url": {
+							"raw": "{{url}}/giveaways/3:register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"giveaways",
+								"3:register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Polls",
+			"item": [
+				{
+					"name": "Create a poll",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"question\": \"League of Legends or Teamfight Tactical?\",\n\t\"first_choice\": \"League of Legends\",\n\t\"second_choice\": \"Teamfight Tactical\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/polls",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"polls"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get polls",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/polls",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"polls"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get poll",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/polls/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"polls",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a poll",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/polls/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"polls",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vote for a poll",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user_id\": 1,\n\t\"choice\": \"yes\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/polls/1:vote",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"polls",
+								"1:vote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get poll's result",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/polls/1:result",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"polls",
+								"1:result"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

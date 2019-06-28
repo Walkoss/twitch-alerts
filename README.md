@@ -47,6 +47,10 @@ In order to run tests, run:
 ```sh
 sbt test
 ```
+Make sure your are in root directory.
+
+### Postman Collection
+A postman collection is available at root directory `twitch_alerts_postman.json`. Import it to get all possible requests.
 
 ## Built With
 
