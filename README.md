@@ -57,7 +57,3 @@ A postman collection is available at root directory `twitch_alerts_postman.json`
 * [Play Framework](https://www.playframework.com/) - Scala web framework
 * [Slick](http://slick.lightbend.com/) - Functional Relational Mapping for Scala
 * [IntelliJ IDEA](https://www.jetbrains.com/idea/) - IDE
-
-## Author
-
-* **Walid El Bouchikhi**  - [Walkoss](https://github.com/Walkoss)
